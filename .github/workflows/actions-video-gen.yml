@@ -31,4 +31,4 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           CATEGORIES: ${{ secrets.CATEGORIES }}
           STORY_PROMPT: ${{ secrets.STORY_PROMPT }}
-        run: python3 image-gen.py
+        run: python3 video-gen.py
