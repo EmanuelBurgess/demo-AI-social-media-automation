@@ -2,7 +2,7 @@ name: actions-video-gen
 
 on:
   schedule:
-    # This runs at 00:00, 08:00, and 16:00 UTC every day
+    # This runs at 10:00 every Monday.
     - cron: '0 10 * * 1'
   workflow_dispatch: 
 
