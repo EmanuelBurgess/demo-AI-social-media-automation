@@ -1,40 +1,34 @@
 name: actions-video-gen
 
+on:
+  schedule:
+    # Runs every Monday at 10:00 AM UTC
+    - cron: '0 10 * * 1'
+  workflow_dispatch: 
+
 jobs:
-  automation_job:
+  post-to-facebook:
     runs-on: ubuntu-latest
+
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
       - name: 🐍 Set up Python
-        uses: actions/checkout@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
+          python-version: '3.12' # Using a stable 2026 version
 
       - name: 📦 Install Dependencies
         run: |
-          pip install google-genai requests
+          python -m pip install --upgrade pip
+          pip install requests google-genai
 
-      - name: 🤖 Step 1: Generate Story & Scripts
-        env:
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-          CATEGORIES: ${{ secrets.CATEGORIES }}
-          VIDEO_STORY_PROMPT: ${{ secrets.VIDEO_STORY_PROMPT }}
-        run: python video-gen.py --step content
-
-      - name: 🎬 Step 2: Render Veo Video
-        env:
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-        run: python video-gen.py --step video
-
-      - name: 📸 Step 3: Create Imagen Teaser
-        env:
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-        run: python video-gen.py --step image
-
-      - name: 📤 Step 4: Publish to Facebook
+      - name: 🚀 Run Facebook Poster Script
         env:
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
-        run: python video-gen.py --step publish
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          CATEGORIES: ${{ secrets.CATEGORIES }}
+          VIDEO_STORY_PROMPT: ${{ secrets.VIDEO_STORY_PROMPT }}
+        run: python3 video-gen.py
