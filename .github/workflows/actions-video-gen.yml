@@ -1,3 +1,5 @@
+name: actions-video-gen
+
 jobs:
   automation_job:
     runs-on: ubuntu-latest
