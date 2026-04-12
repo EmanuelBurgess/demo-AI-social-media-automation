@@ -1,34 +1,45 @@
 name: actions-video-gen
 
-on:
-  schedule:
-    # Runs every Monday at 10:00 AM UTC
-    - cron: '0 10 * * 1'
-  workflow_dispatch: 
-
 jobs:
-  post-to-facebook:
+  automation_job:
     runs-on: ubuntu-latest
-
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
       - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/checkout@v4
         with:
-          python-version: '3.12' # Using a stable 2026 version
+          python-version: '3.14'
 
       - name: 📦 Install Dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install requests google-genai
+          pip install google-genai requests
 
-      - name: 🚀 Run Facebook Poster Script
+      - name: 🤖 Step 1: Generate Story & Scripts
+        env:
+          # API key for accessing Google GenAI services
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          # Categories to guide story generation
+          CATEGORIES: ${{ secrets.CATEGORIES }}
+          # Prompt used for generating the video story
+          VIDEO_STORY_PROMPT: ${{ secrets.VIDEO_STORY_PROMPT }}
+        run: python video-gen.py --step content
+
+      - name: 🎬 Step 2: Render Veo Video
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: python video-gen.py --step video
+
+      - name: 📸 Step 3: Create Imagen Teaser
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: python video-gen.py --step image
+          # Facebook Page ID used for publishing the video
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          # Facebook Access Token for authenticating API requests
+          FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
         env:
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-          CATEGORIES: ${{ secrets.CATEGORIES }}
-          VIDEO_STORY_PROMPT: ${{ secrets.VIDEO_STORY_PROMPT }}
-        run: python3 video-gen.py
+        run: python video-gen.py --step publish
