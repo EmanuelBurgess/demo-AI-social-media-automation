@@ -1,4 +1,4 @@
-name: Scheduled Facebook Post
+name: actions-image-gen
 
 on:
   schedule:
