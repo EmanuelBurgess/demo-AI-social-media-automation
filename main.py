@@ -13,12 +13,21 @@ MODEL_ID = "gemini-2.5-flash-lite"
 
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Categories
-#CATEGORIES = ["artemis ii"]
-CATEGORIES = [
-    "Unsolved Cold Case", "Deep Sea Stories", "Space Exploration", "Mysterious Disappearance", 
-    "Unexplained Phenomenon", "Dog Rescues Story", "Dog Survival Story", "Cute Dog story", "artemis ii"
-]
+#Category
+# 1. FAIL FAST: Check if the Secret is missing or empty
+categories_env = os.getenv("CATEGORIES")
+
+if not categories_env or categories_env.strip() == "":
+    print("ERROR: CATEGORIES secret is not set or is empty. Pipeline failing.")
+    sys.exit(1) # This tells GitHub Actions the job failed
+
+# 2. Process Categories
+CATEGORIES = [c.strip() for c in categories_env.split(",") if c.strip()]
+
+# Final safety check: ensure the split resulted in an actual list
+if not CATEGORIES:
+    print("ERROR: No valid categories found in the CATEGORIES secret. Pipeline failing.")
+    sys.exit(1)
 
 def main():
     # 1. Setup workspace
