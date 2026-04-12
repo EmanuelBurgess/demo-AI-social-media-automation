@@ -1,54 +1,43 @@
+# AI-Powered Facebook Content Automator 🚀
 
+An automated pipeline that leverages **Gemini 2.5 Flash-lite** and **Imagen 4.0** to generate high-engagement stories and cinematic visuals, then automatically posts them to a Facebook Page three times a day.
 
-# 🚀 Social media (2026 Edition)
+## 🛠 Features
+- **Dynamic Content:** Randomly selects from a curated list of categories.
+- **AI-Driven Creative:** Uses Gemini for storytelling and Imagen for realistic, high-quality images.
+- **Fail-Fast Architecture:** Validates all required secrets and prompt placeholders before execution to save API credits.
+- **Fully Automated:** Runs via GitHub Actions on a 3x daily schedule (00:00, 08:00, 16:00 UTC).
+- **No-Code Configuration:** Update prompts and categories directly via GitHub Secrets without touching code.
 
-An advanced, production-ready Python automation engine that researches, writes, renders, and publishes high-fidelity **Facebook Reels** and **Stories** using the Google Gemini 3 ecosystem and Facebook Graph API v20.0.
+## 📋 Prerequisites
+To run this automation, you will need:
+1. **Google AI SDK Key:** From [Google AI Studio](https://aistudio.google.com/).
+2. **Facebook Page ID & Access Token:** Generated via a Meta App with `page_manage_posts` and `pages_read_engagement` permissions.
+3. **GitHub Repository:** To host the code and Actions.
 
-![Python Version](https://img.shields.io/badge/python-3.14+-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-![AI Models](https://img.shields.io/badge/AI-Gemini%203%20%7C%20Veo%203.1%20%7C%20Imagen%204-orange.svg)
+## 🔐 GitHub Secrets Configuration
+Navigate to **Settings > Secrets and variables > Actions** and add the following:
 
-## ✨ Features
+| Secret Name | Description | Example Format |
+| :--- | :--- | :--- |
+| `FB_PAGE_ID` | Your Facebook Page unique ID. | `1234567890` |
+| `FB_ACCESS_TOKEN` | A Long-Lived Page Access Token. | `EAAB...` |
+| `GOOGLE_API_KEY` | Your Gemini API Key. | `AIza...` |
+| `CATEGORIES` | Comma-separated topics for the AI. | `Deep Sea, Space, Cold Cases` |
+| `STORY_PROMPT` | The instruction for the AI (Must include `{category}`). | `Write a story about {category}...` |
 
-* **Multimodal AI Pipeline**:
-    * **Scripting**: Powered by `gemini-3-flash-preview` for high-retention social hooks.
-    * **Video**: Cinematic 9:16 vertical video with native audio via `veo-3.1-generate-preview`.
-    * **Teasers**: High-resolution 4K story images via `imagen-4.0-generate-001`.
-* **Robust Upload Engine**: Handles the complex 3-step Facebook Resumable Upload protocol (Initialize -> Binary Stream -> Publish).
-* **Auto-Cleanup**: Self-managing temporary workspace to keep your host machine clean.
+> **Note:** Your `STORY_PROMPT` **must** include the placeholder `{category}` so the script can inject the randomly selected topic.
 
-## 🛠️ Tech Stack
+## 🚀 Deployment
+1. Clone this repository.
+2. Ensure your Python script is named `main.py`.
+3. Push the `.github/workflows/facebook_poster.yml` file to your main branch.
+4. Manually trigger the first run via the **Actions** tab to verify the connection.
 
-* **Language**: Python 3.14+
-* **AI SDK**: `google-genai` (2026 Release)
-* **API**: Facebook Graph API v20.0
-* **Libraries**: `requests`, `pathlib`, `datetime`
+## 📁 File Structure
+- `main.py`: The Python execution engine.
+- `.github/workflows/facebook_poster.yml`: The GitHub Actions schedule configuration.
+- `requirements.txt`: (Optional) Lists `requests` and `google-genai`.
 
-## 🚀 Installation
-
-1.  **Clone the Repository**:
-    ```bash
-    git clone [https://github.com/your-username/fb-reel-automator.git](https://github.com/your-username/fb-reel-automator.git)
-    cd fb-reel-automator
-    ```
-
-2.  **Install Dependencies**:
-    *Note: Using `--break-system-packages` is required on modern macOS if not using a virtual environment.*
-    ```bash
-    pip3 install -U google-genai requests --break-system-packages
-    ```
-
-3.  **Configure Environment Variables**:
-    Add these to your `~/.zshrc` or `~/.bash_profile`:
-    ```bash
-    export GOOGLE_API_KEY="your_google_key"
-    export FB_PAGE_ID="your_page_id"
-    export FB_ACCESS_TOKEN="your_long_lived_page_token"
-    ```
-
-## 📋 Usage
-
-### Manual Run
-Force a post immediately (ignoring the scheduler):
-```bash
-python3 main.py
+## ⚖️ License
+MIT
