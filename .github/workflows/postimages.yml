@@ -31,4 +31,5 @@ jobs:
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           CATEGORIES: ${{ secrets.CATEGORIES }}
+          STORY_PROMPT: ${{ secrets.STORY_PROMPT }}
         run: python3 main.py
