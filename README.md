@@ -1,43 +1,56 @@
-# AI-Powered Facebook Content Automator 🚀
+# AI-Powered Social Media Automation (2026 Edition) 🚀
 
-An automated pipeline that leverages **Gemini 2.5 Flash-lite** and **Imagen 4.0** to generate high-engagement stories and cinematic visuals, then automatically posts them to a Facebook Page three times a day.
+An advanced, production-ready Python automation engine that researches, writes, renders, and publishes high-fidelity **Facebook Stories** and **Posts** using the Gemini 3 ecosystem and Facebook Graph API v20.0.
 
-## 🛠 Features
-- **Dynamic Content:** Randomly selects from a curated list of categories.
-- **AI-Driven Creative:** Uses Gemini for storytelling and Imagen for realistic, high-quality images.
-- **Fail-Fast Architecture:** Validates all required secrets and prompt placeholders before execution to save API credits.
-- **Fully Automated:** Runs via GitHub Actions on a 3x daily schedule (00:00, 08:00, 16:00 UTC).
-- **No-Code Configuration:** Update prompts and categories directly via GitHub Secrets without touching code.
+![Python Version](https://img.shields.io/badge/python-3.14+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![AI Models](https://img.shields.io/badge/AI-Gemini%203%20%7C%20Imagen%204-orange.svg)
 
-## 📋 Prerequisites
-To run this automation, you will need:
-1. **Google AI SDK Key:** From [Google AI Studio](https://aistudio.google.com/).
-2. **Facebook Page ID & Access Token:** Generated via a Meta App with `page_manage_posts` and `pages_read_engagement` permissions.
-3. **GitHub Repository:** To host the code and Actions.
+## ✨ Features
+* **Multimodal AI Pipeline**:
+    * **Scripting**: Powered by `gemini-3-flash` for high-retention engagement hooks.
+    * **Visuals**: High-resolution cinematic images via `imagen-4.0-generate-001`.
+* **GitHub Actions Integration**: Fully automated 3x daily posting schedule (00:00, 08:00, 16:00 UTC).
+* **Fail-Fast Architecture**: Validates all API keys and prompt placeholders before execution to ensure 100% reliability.
+* **No-Code Configuration**: Update your content strategy (categories and prompts) directly through GitHub Secrets without touching a line of code.
 
-## 🔐 GitHub Secrets Configuration
-Navigate to **Settings > Secrets and variables > Actions** and add the following:
+## 🛠️ Tech Stack
+* **Language**: Python 3.14+
+* **AI SDK**: `google-genai` (2026 Release)
+* **API**: Facebook Graph API v20.0
+* **Automation**: GitHub Actions
 
-| Secret Name | Description | Example Format |
-| :--- | :--- | :--- |
-| `FB_PAGE_ID` | Your Facebook Page unique ID. | `1234567890` |
-| `FB_ACCESS_TOKEN` | A Long-Lived Page Access Token. | `EAAB...` |
-| `GOOGLE_API_KEY` | Your Gemini API Key. | `AIza...` |
-| `CATEGORIES` | Comma-separated topics for the AI. | `Deep Sea, Space, Cold Cases` |
-| `STORY_PROMPT` | The instruction for the AI (Must include `{category}`). | `Write a story about {category}...` |
+## 🚀 Installation & Setup
 
-> **Note:** Your `STORY_PROMPT` **must** include the placeholder `{category}` so the script can inject the randomly selected topic.
+1.  **Clone the Repository**:
+    ```bash
+    git clone [https://github.com/EmanuelBurgess/demo-AI-social-media-automation.git](https://github.com/EmanuelBurgess/demo-AI-social-media-automation.git)
+    cd demo-AI-social-media-automation
+    ```
 
-## 🚀 Deployment
-1. Clone this repository.
-2. Ensure your Python script is named `main.py`.
-3. Push the `.github/workflows/facebook_poster.yml` file to your main branch.
-4. Manually trigger the first run via the **Actions** tab to verify the connection.
+2.  **Configure GitHub Secrets**:
+    To enable the automated pipeline, go to **Settings > Secrets and variables > Actions** and add:
 
-## 📁 File Structure
-- `main.py`: The Python execution engine.
-- `.github/workflows/facebook_poster.yml`: The GitHub Actions schedule configuration.
-- `requirements.txt`: (Optional) Lists `requests` and `google-genai`.
+    | Secret Name | Description |
+    | :--- | :--- |
+    | `FB_PAGE_ID` | Your Facebook Page unique ID. |
+    | `FB_ACCESS_TOKEN` | Long-lived Page Access Token. |
+    | `GOOGLE_API_KEY` | Gemini API Key from Google AI Studio. |
+    | `CATEGORIES` | Comma-separated topics (e.g., `Space, Deep Sea, Dogs`). |
+    | `STORY_PROMPT` | The AI instruction (Must include `{category}`). |
 
-## ⚖️ License
-MIT
+## 📋 Usage
+
+### Automated (Scheduled)
+The system is pre-configured to run three times daily via the `.github/workflows/facebook_poster.yml` file.
+
+### Manual Trigger
+You can force a post immediately via the GitHub UI:
+1.  Navigate to the **Actions** tab.
+2.  Select **Scheduled Facebook Post**.
+3.  Click **Run workflow**.
+
+### Local Development
+If running locally, ensure your environment variables are set and run:
+```bash
+python3 main.py
