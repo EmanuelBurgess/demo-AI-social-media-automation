@@ -1,4 +1,5 @@
 import os
+import sys
 import random
 import requests
 import pathlib
@@ -39,13 +40,8 @@ def main():
 
     # 2. Generate Story
     print("Generating Story...")
-    #story_prompt = f"Write a real-life {category} story for Facebook. Bold headline, 3-5 paragraphs and hashtags."
-    story_prompt = (
-        f"Write a real-life {category} story for Facebook. "
-        "DO NOT include any introductory text like 'Here is the story'. "
-        "A polarizing 'Engagement Question' to spark comments."
-        "Start IMMEDIATELY with a bold headline, followed by 3-5 paragraphs and hashtags."
-    )
+    STORY_PROMPT_TEMPLATE = os.getenv("STORY_PROMPT")
+    story_prompt = STORY_PROMPT_TEMPLATE.format(category=category)
     
     try:
         response = client.models.generate_content(model=MODEL_ID, contents=story_prompt)
