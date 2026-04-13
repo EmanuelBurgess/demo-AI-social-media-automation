@@ -21,7 +21,7 @@ The project features two distinct automation pipelines located in `.github/workf
 - **Logic:** Uses Gemini to write a story based on a random category, Veo to render video, and Imagen for the teaser.
 
 ### 2. Image Post Pipeline (`actions-image-gen.yml`)
-- **Schedule:** Daily at 11:00 AM UTC.
+- **Schedule:** 3x a week starting at 11:00 AM UTC.
 - **Output:** A high-quality image post with an AI-written caption.
 - **Logic:** Optimized for faster daily engagement using Imagen 4.0.
 
