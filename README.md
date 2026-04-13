@@ -1,57 +1,50 @@
-# AI-Powered Social Media Automation (2026 Edition) 🚀
+# AI Social Media Automation 🚀
 
-An advanced, production-ready Python automation engine that researches, writes, renders, and publishes high-fidelity **Facebook Stories** and **Posts** using the **Gemini 3** ecosystem and Facebook Graph API v20.0.
+An automated pipeline for generating and publishing high-quality multi-modal AI content to Facebook. This repository uses the latest Google Generative AI models to handle everything from scripting to media creation and posting.
 
 ![Python Version](https://img.shields.io/badge/python-3.14+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![AI Models](https://img.shields.io/badge/AI-Gemini%203%20%7C%20Imagen%204-orange.svg)
 
-## ✨ Features
-* **Multimodal AI Pipeline**:
-    * **Scripting**: Powered by `gemini-3-flash` for high-retention engagement hooks and long-form storytelling.
-    * **Visuals**: High-resolution cinematic images via `imagen-4.0-generate-001`.
-* **Dynamic Content Injection**: Decoupled prompt and category variables for instant strategy adjustments without code commits.
-* **GitHub Actions Integration**: Fully automated 3x daily posting schedule (00:00, 08:00, 16:00 UTC).
-* **Fail-Fast Architecture**: Pre-execution validation of API keys, environment secrets, and prompt placeholders to ensure 100% pipeline reliability.
-* **No-Code Strategy**: Manage your entire content calendar (topics and AI instructions) directly through GitHub Secrets.
+## 🤖 AI Stack (2026 Models)
+- **Gemini 3.1 Flash Lite:** Handles story scripting, headline generation, and hashtag optimization.
+- **Veo 3.1 Fast:** Generates 8-second cinematic 4K vertical videos for Facebook Reels.
+- **Imagen 4.0 Fast:** Creates high-fidelity 9:16 vertical images for Facebook Stories and Feed posts.
 
-## 🛠️ Tech Stack
-* **Language**: Python 3.14+
-* **AI SDK**: `google-genai` (Official 2026 Release)
-* **API**: Facebook Graph API v20.0
-* **Automation**: GitHub Actions
+## 🔄 Automated Workflows
 
-## 🚀 Installation & Setup
+The project features two distinct automation pipelines located in `.github/workflows/`:
 
-1.  **Clone the Repository**:
-    ```bash
-    git clone [https://github.com/EmanuelBurgess/demo-AI-social-media-automation.git](https://github.com/EmanuelBurgess/demo-AI-social-media-automation.git)
-    cd demo-AI-social-media-automation
-    ```
+### 1. Video Reel Pipeline (`actions-video-gen.yml`)
+- **Schedule:** Mondays at 10:00 AM UTC.
+- **Output:** A generated 4K Reel and a companion Story teaser.
+- **Logic:** Uses Gemini to write a story based on a random category, Veo to render video, and Imagen for the teaser.
 
-2.  **Configure GitHub Secrets**:
-    To enable the automated pipeline, navigate to **Settings > Secrets and variables > Actions** and add:
+### 2. Image Post Pipeline (`actions-image-gen.yml`)
+- **Schedule:** Daily at 11:00 AM UTC.
+- **Output:** A high-quality image post with an AI-written caption.
+- **Logic:** Optimized for faster daily engagement using Imagen 4.0.
 
-    | Secret Name | Description |
-    | :--- | :--- |
-    | `FB_PAGE_ID` | Your Facebook Page unique ID. |
-    | `FB_ACCESS_TOKEN` | Long-lived Page Access Token. |
-    | `GOOGLE_API_KEY` | Gemini API Key from Google AI Studio. |
-    | `CATEGORIES` | Comma-separated topics (e.g., `Space exploration, Deep sea, Future Tech`). |
-    | `STORY_PROMPT` | The AI instruction (Must include `{category}` placeholder). |
+## 🔑 Setup & Configuration
 
-## 📋 Usage
+To run these workflows, you must configure the following **GitHub Secrets** in `Settings > Secrets and variables > Actions`:
 
-### Automated (Scheduled)
-The system is pre-configured to run three times daily via the `.github/workflows/facebook_poster.yml` file.
+| Secret Name | Description |
+| :--- | :--- |
+| `GOOGLE_API_KEY` | Your API key from Google AI Studio. |
+| `FB_PAGE_ID` | The numeric ID of your Facebook Business Page. |
+| `FB_ACCESS_TOKEN` | A Long-Lived Page Access Token with `page_video_reels` and `publish_video` permissions. |
+| `CATEGORIES` | A comma-separated list of topics (e.g., `Space Exploration, Dog Rescues, Deep Sea`). |
+| `VIDEO_STORY_PROMPT` | Your prompt template for Gemini (Must include the `{category}` placeholder). |
 
-### Manual Trigger
-You can force a post immediately via the GitHub UI:
-1.  Navigate to the **Actions** tab.
-2.  Select **Scheduled Facebook Post**.
-3.  Click **Run workflow**.
+## 🛠 Project Structure
+- `.github/workflows/`: Contains the YAML files that handle the cron scheduling.
+- `video-gen.py`: The main Python orchestrator for the Video/Reel pipeline.
+- `image-gen.py`: The script dedicated to the daily Image/Feed pipeline.
+- `fb_tmp/`: Temporary directory created during runtime to store generated media before upload.
 
-### Local Development
-If running locally, ensure your environment variables are exported in your shell, then run:
-```bash
-python3 main.py
+## 🚀 Manual Triggers
+Both workflows support `workflow_dispatch`. You can manually trigger a post at any time by going to the **Actions** tab, selecting a workflow, and clicking **Run workflow**.
+
+---
+*Maintained by [Emanuel Burgess](https://github.com/EmanuelBurgess)*
